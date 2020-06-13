@@ -1,0 +1,29 @@
+Entity mercedes [cla, aclass, bclass, cclass, slc, sl]
+Entity audi [q3, q4, q7, a100, tt]
+Entity toyota [aygo, proace]
+Entity country [danmark, england, sverige, finland, holland]
+Entity pickcar[Mercedes, Audi, Toyota]
+
+Intent Car 
+	number with 'Are you needing a three door car, or a five door car?'
+	number with 'how far are you going to travel while at your destination?'
+	number with 'how many children do you have traveling with you?'
+	
+	Training:
+	'I would need a' ('three' is number).
+	'I will drive approximately' ('20' is number).
+	'There is ' ('2' is number).
+	
+Intent PickToyota extends Car
+	isFollowUp Car
+	toyota with 'which toyota would you like to book?'
+	
+	Training: 
+	'i would like to book' ('aygo' is toyota).
+	
+Intent PickAudi 
+	audi with 'Which Audi would you like to book?'
+	
+	Training:
+	'I would like to reserved a' ('tt' is audi).
+	
