@@ -1,0 +1,58 @@
+grammar org.xtext.example.domainmodel.Domainmodel with org.eclipse.xtext.common.Terminals
+
+generate domainmodel "http://www.xtext.org/example/domainmodel/Domainmodel"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+Model:
+	agent+=Agent*
+;
+
+Agent:
+	Entity | Intent
+;
+
+Intent:
+	'Intent' name=ID ('extends' superType=[Intent])? isFollowUp=IsFollowUp? question+=Question+ training=Training
+;
+
+IsFollowUp:
+     'isFollowUp' intent=[Intent]
+;
+
+Entity:
+	 'Entity' name=ID '[' example+=EntityExample+ ']'
+;
+
+Question: 
+	 questionEntity=QuestionEntity 'with' prompt=STRING
+;
+
+QuestionEntity:
+	withEntity=Reference
+;
+
+Training:
+	{Training} 'Training:' trainingref+=TrainingRef+
+;
+
+TrainingRef:
+	phrase=STRING declaration=Declaration '.'
+;
+
+Declaration:
+	'(' trainingstring=STRING 'is' reference=Reference ')'
+;
+
+EntityExample:
+	name=ID ','?
+;
+
+Sysvariable:
+	value=('number' | 'date-time' | 'date' | 'duration' | 'address' | 'email' | 'phone-number' | 'date-period' 
+		| 'time-period' | 'url' | 'any' | 'color' | 'language')
+;
+
+Reference:
+	entity=[Entity] | sysvar=Sysvariable
+;
